@@ -1,0 +1,35 @@
+/cm/local/apps/slurm/var/spool/job2172577/slurm_script
+15-new-cae-initialization_5type-new2-N1000
+15-new-cae-initialization_5type-new2-N1000-3
+save_dir | ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1
+data_fn | ../Data/synth-data-05new-N1000.npy
+data_csv_fn | ../Data/synth-data-05new-N1000.csv
+1.18.5
+2.3.1
+(1000, 64, 64, 64)
+save_dir | ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_2
+data_fn | ../Data/synth-data-05new-N1000.npy
+data_csv_fn | ../Data/synth-data-05new-N1000.csv
+1.18.5
+2.3.1
+(1000, 64, 64, 64)
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_40
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_4
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_34
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_1
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_14
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_2
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_24
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_17
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_35
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_9
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_27
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_37
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_3
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_44
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_20
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_22
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_36
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_0
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_21
+initializing with ../scratch/CVAE-5type-new2-N1000-VOLeHEZiKM/stage_1/CVAE_init_attmp_13
