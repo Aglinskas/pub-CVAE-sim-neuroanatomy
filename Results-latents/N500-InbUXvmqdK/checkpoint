@@ -1,0 +1,2 @@
+model_checkpoint_path: "CVAE_init_attmp_19"
+all_model_checkpoint_paths: "CVAE_init_attmp_19"
