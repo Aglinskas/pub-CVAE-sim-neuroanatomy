@@ -1,6 +1,7 @@
 Code/.ipynb_checkpoints/*
 Code/__pycache__/*
 
+Data/synth-data-02-N2000.npy
 Data/CVAE_diffs_mean-02-N1000.npy
 Data/synth-data-02-N1000.npy
 Data/synth-data-05-N1000.npy
