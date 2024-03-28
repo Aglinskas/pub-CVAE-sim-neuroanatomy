@@ -1,8 +1,6 @@
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
-#from scipy.special import expit
-#from sklearn.metrics import silhouette_score
 from tensorflow.keras.layers import *
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
@@ -64,9 +62,6 @@ def get_MRI_CVAE_3D(input_shape=(64,64,64,1),
             padding='same',
             kernel_initializer=tf.keras.initializers.GlorotUniform())
 
-
-
-    #initializer_latents = tf.keras.initializers.he_normal()
                         
     # generate latent vector Q(z|X)
     z_h_layer = Dense(intermediate_dim, activation='relu', use_bias=bias,kernel_initializer=tf.keras.initializers.Orthogonal())
@@ -127,8 +122,7 @@ def get_MRI_CVAE_3D(input_shape=(64,64,64,1),
         return s_mean, s_log_var, s, shape
 
     tg_s_mean, tg_s_log_var, tg_s, shape_s = s_encoder_func(tg_inputs)
-    #bg_s_mean, bg_s_log_var, bg_s, _ = s_encoder_func(bg_inputs) # this is what they had 
-    bg_z_mean, bg_z_log_var, bg_z, _ = z_encoder_func(bg_inputs) # Aidas and Stefano team hax
+    bg_z_mean, bg_z_log_var, bg_z, _ = z_encoder_func(bg_inputs) 
 
 
       # instantiate encoder models
@@ -173,16 +167,11 @@ def get_MRI_CVAE_3D(input_shape=(64,64,64,1),
 
     bg_outputs = cvae_decoder(tf.keras.layers.concatenate([bg_z, zeros], -1)) # Aidas look into this, is this correct
 
- #   fg_outputs = cvae_decoder(tf.keras.layers.concatenate([tg_z, zeros], -1))
-
     # instantiate VAE model
     cvae = tf.keras.models.Model(inputs=[tg_inputs, bg_inputs], 
                               outputs=[tg_outputs, bg_outputs], 
                               name='contrastive_vae')
 
-#     cvae_fg = tf.keras.models.Model(inputs=tg_inputs, 
-#                                   outputs=fg_outputs, 
-#                                   name='contrastive_vae_fg')
 
     if disentangle:
         discriminator = Dense(1, activation='sigmoid')
@@ -225,22 +214,11 @@ def get_MRI_CVAE_3D(input_shape=(64,64,64,1),
     kl_loss = tf.keras.backend.sum(kl_loss, axis=-1)
     kl_loss *= -0.5
     
-    
-    #print(f'reconstruction loss {reconstruction_loss}')
-    #print(f'kl_loss loss {kl_loss}')
-    #print(f'tc_loss loss {tc_loss}')
-    #print(f'discriminator_loss loss {discriminator_loss}')
-    
     cvae_loss = tf.keras.backend.mean(reconstruction_loss + beta*kl_loss + gamma*tc_loss + discriminator_loss)
     cvae.add_loss(cvae_loss)
     
     if type(opt)==type(None):
         opt = tf.keras.optimizers.Adam(learning_rate=0.001,beta_1=0.9,beta_2=0.999,epsilon=1e-07,amsgrad=False,name='Adam')
-    
-#     opt = tf.keras.optimizers.SGD(
-#     learning_rate=0.01, momentum=0.0, nesterov=False, name='SGD')
-
-    #opt = tf.keras.optimizers.RMSprop(learning_rate=0.001, rho=0.9, momentum=0.9, epsilon=1e-07, centered=False, name='RMSprop')
     
     #cvae.compile(optimizer='rmsprop',run_eagerly=True)
     cvae.compile(optimizer=opt,run_eagerly=True)
@@ -285,15 +263,6 @@ def cvae_dashboard():
     
     z = z_encoder.predict(training_data[patient_idx,:,:,:])[2]
     s = s_encoder.predict(training_data[patient_idx,:,:,:])[2]
-
-    #rdm_z = make_RDM(z,data_scale='ratio', metric='euclidean')
-    #rdm_s = make_RDM(s,data_scale='ratio', metric='euclidean')
-
-    #rsa_z = [fit_rsa(make_RDM(z),rdm_tx_z),fit_rsa(make_RDM(z),rdm_tx_s)]
-    #rsa_s = [fit_rsa(make_RDM(s),rdm_tx_z),fit_rsa(make_RDM(s),rdm_tx_s)]
-
-    #col_rsa_z.append(rsa_z)
-    #col_rsa_s.append(rsa_s)
 
     rsa_vals.append( [fit_rsa(make_RDM(z),rdm_tx_z),
                         fit_rsa(make_RDM(z),rdm_tx_s),
@@ -364,21 +333,12 @@ def cvae_dashboard():
 
     # ##### SUBPLOT 7 ##### 
     plt.subplot(nrows,ncols,7)
-    #plt.plot(np.array(col_rsa_z)[:,0])
-    #plt.plot(np.array(col_rsa_s)[:,0])
-    #plt.legend(['Z','S'])
-    #plt.title('RSA scanner')
+
 
     # ##### SUBPLOT 8 ##### 
     plt.subplot(nrows,ncols,8)
     plt.plot([max(0,val) for val in varExps])
     plt.title(f'VarExp: {varExps[-1]:.2f}')
-    
-    #plt.plot(np.array(col_rsa_z)[:,3])
-    #plt.plot(np.array(col_rsa_s)[:,3])
-    #plt.legend(['Z','S'])
-    #plt.title('RSA Symptom')
-
 
     ##### SUBPLOT 9 ##### 
     plt.subplot(nrows,ncols,9)
@@ -439,11 +399,6 @@ def cvae_dashboard():
     plt.legend(['TX Z','TX S'])
     plt.title('Z')
 
-    # plt.plot(np.array(col_rsa_z)[-1,:],'b.',markersize=20);
-    # plt.plot(np.array(col_rsa_s)[-1,:],'g.',markersize=20);
-    # plt.xticks(np.arange(4),labels=['scanner','age','sex','sympt']);
-    # plt.title('RSA')
-
     #### SAGITAL SLICES  ####
     plt.subplot(nrows,ncols,17)
     #sns.heatmap(patient_batch[rand_sub,:,:])
@@ -459,60 +414,7 @@ def cvae_dashboard():
     plt.imshow(np.rot90( abs(patient_batch[rand_sub,mid,:,:]-prediction[rand_sub,mid,:,:,0]) ))
     plt.xticks([]);plt.yticks([]);plt.title('difference')
 
-
-
-    # ##### SUBPLOT 16 #####                                             
-    # plt.subplot(nrows,ncols,16)
-    # plt.imshow(np.rot90(prediction[rand_sub,16,:,:,rand_map]))
-    # plt.xticks([]);plt.yticks([]);plt.title('predicted')
-    # ##### SUBPLOT 17 #####     
-    #     plt.subplot(nrows,ncols,18)
-    #     keys = ['dataset_id','siteID','age','gender','fiq','ados_total','ados_social','ados_comm','ados_rrb',]
-    #     scales = ['ordinal','ordinal','ratio','ordinal','ratio','ratio','ratio','ratio','ratio',]
-    #     rsa_res = np.array([key_rsa_cvae(keys[i],scales[i],cmats_val,df_val) for i in range(len(keys))])
-    #     plt.plot(rsa_res[:,0],'.',markersize=15,alpha=.5)
-    #     plt.plot(rsa_res[:,1],'.',markersize=15,alpha=.5)
-    #     plt.legend(['Z','S']);
-    #     plt.xticks(np.arange(rsa_res.shape[0]),labels=keys,rotation=45);
-    #     plt.title('RSA VAL')
-
-    # ##### SUBPLOT 18 #####     
-    #plt.subplot(nrows,ncols,19)
-    #keys = ['dataset_id','siteID','age','gender','fiq','ados_total','ados_social','ados_comm','ados_rrb',]
-    #scales = ['ordinal','ordinal','ratio','ordinal','ratio','ratio','ratio','ratio','ratio',]
-    #rsa_res = np.array([key_rsa_cvae(keys[i],scales[i],cmats_test,df_test) for i in range(len(keys))])
-    #plt.plot(rsa_res[:,0],'.',markersize=15,alpha=.5)
-    #plt.plot(rsa_res[:,1],'.',markersize=15,alpha=.5)
-    #plt.legend(['Z','S']);
-    #plt.xticks(np.arange(rsa_res.shape[0]),labels=keys,rotation=45);
-    #plt.title('RSA TEST')
-
-    # ##### SUBPLOT 19 #####     
-    # plt.subplot(nrows,ncols,19)
-    # plt.imshow(patient_batch[rand_sub,:,:,16,rand_map])
-    # plt.xticks([]);plt.yticks([]);plt.title('actual')
-    # ##### SUBPLOT 20 #####     
-    # plt.subplot(nrows,ncols,20)
-    # plt.imshow(prediction[rand_sub,:,:,16,rand_map])
-    # plt.xticks([]);plt.yticks([]);plt.title('predicted')
-
-
-    # #############################################
-    # ################### LOSSES ##################
-    # #############################################
-
-
-    # Validation loss
-    #predictions = cvae.predict([patient_batch_val,control_batch_val])
-    #input_shape = data_size[1:]
-    #reconstruction_loss = tf.keras.losses.mse(K.flatten(patient_batch_val), K.flatten(predictions[0])) 
-    #reconstruction_loss += tf.keras.losses.mse(K.flatten(control_batch_val), K.flatten(predictions[1])) 
-    #reconstruction_loss *= input_shape[0] * input_shape[1]
-    #val_mse.append(reconstruction_loss)
-
-    #predictions = cvae.predict([patient_batch,control_batch])
     predictions = cvae_predict([patient_batch,control_batch])
-    #input_shape = data_size[1:]
     input_shape = training_data.shape[1::]
     reconstruction_loss = tf.keras.losses.mse(K.flatten(patient_batch), K.flatten(predictions[0])) 
     reconstruction_loss += tf.keras.losses.mse(K.flatten(control_batch), K.flatten(predictions[1])) 
@@ -624,17 +526,6 @@ def safe_mkdir(dirpath):
     if not os.path.exists(dirpath):
         os.mkdir(dirpath)
 
-# def cvae_predict(batch):
-    
-#     z = z_encoder.predict(batch[0])[2]
-#     z_ = np.zeros(z.shape)
-#     recon1 = cvae_decoder(np.hstack((z,z_)))
-    
-#     z = z_encoder.predict(batch[1])[2]
-#     s = s_encoder.predict(batch[1])[2]
-#     recon2 = cvae_decoder(np.hstack((z,s)))
-    
-#     return [recon1.numpy(),recon2.numpy()]
 
 def divide_chunks(l, n):
     # Yield successive n-sized
