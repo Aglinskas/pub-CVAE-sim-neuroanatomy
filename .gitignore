@@ -1,3 +1,4 @@
+.DS_Store
 Code/.ipynb_checkpoints/*
 Code/__pycache__/*
 Data/*.npz
