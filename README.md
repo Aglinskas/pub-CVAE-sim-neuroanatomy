@@ -1,5 +1,5 @@
 # pub-CVAE-sim-neuroanatomy
-Repository for the code and data accompanying the manuscript "Understanding heterogeneity in psychiatric disorders using Contrastive Variational Autoencoders" by Aidas Aglinskas, Alicia Bergeron & Stefano Anzellotti. 
+Repository for the code and data accompanying the manuscript "Understanding heterogeneity in psychiatric disorders: a method for identifying subtypes and parsing comorbidity" by Aidas Aglinskas, Alicia Bergeron & Stefano Anzellotti. 
 
 # Contents
 * **specfile.txt** contains the parameters of the Anaconda enviroment
