@@ -1,5 +1,4 @@
 # pub-CVAE-sim-neuroanatomy
-Repository for the code and data accompanying the manuscript "Understanding heterogeneity in psychiatric disorders: a method for identifying subtypes and parsing comorbidity" by Aidas Aglinskas, Alicia Bergeron & Stefano Anzellotti. 
 
 # Contents
 * **specfile.txt** contains the parameters of the Anaconda enviroment
@@ -13,7 +12,11 @@ Repository for the code and data accompanying the manuscript "Understanding hete
 * **Code/**
   * **01-generate-data.ipynb** # Generates training data. can take in .csv recipe to recreate data used for model training
   * **02-train-CVAE-ensemble-baseline.ipynb** Train the baseline CVAE model
-  * **03-train-VAE-ensemble-baseline.ipynb** Train the baseline VAE model
+  * **03-1-train-VAE-ensemble-baseline.ipynb** Train the baseline VAE model
+  * **03-2-train-VAE-16D-ensemble-baseline.ipynb** Train the baseline VAE 16D model
+  * **03-3-train-beta-VAE-B2-ensemble-baseline.ipynb** Train the baseline beta-VAE model (b=2)
+  * **03-4-train-beta-VAE-B10-ensemble-baseline.ipynb** Train the baseline beta-VAE model (b=10)
+  * **03-5-train-factor-VAE-ensemble-baseline.ipynb** Train the baseline factor-VAE model
   * **04-train-CVAE-ensemble-N500.ipynb** Train the CVAE model using only N=500 subjects
   * **05-train-CVAE-ensemble-N200.ipynb** Train the CVAE model using only N=200 subjects
   * **06-train-CVAE-ensemble-8D.ipynb** Train the CVAE model with 8-dimensional latent-space
@@ -39,6 +42,10 @@ Repository for the code and data accompanying the manuscript "Understanding hete
   * **initialize_CVAE-dim8.py** Function that trains the 8-dimensional CVAE
   * **initialize_CVAE.py** Function that trains the CVAE
   * **initialize_VAE.py** Function that trains the VAE
+  * **initialize_TCVAE.py** Function that trains the factor VAE
+  * **initialize_VAE-16D.py** Function that trains the 16D VAE
+  * **initialize_bVAE-10.py** Function that trains the beta-VAE (b=10)
+  * **initialize_bVAE-2.py** Function that trains the beta-VAE (b=2)
   * **make_models.py** helper functions
   * **rsa_funcs.py** helper functions
   * **slurm-01-train-CVAE-ensemble.sh** SLURM job that trains the CVAE models
